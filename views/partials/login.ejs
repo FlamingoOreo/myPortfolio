@@ -17,13 +17,5 @@ required>
                 </div>
             </form>
         <% } %>
-        <% if (user) { %>
-            <div class="row">
-                <p>Hey <%=user.username%>!</p>
-                <form action="/login/logout" method="post">
-                    <button class="logout" type="submit">Sign out</button>
-                </form>
-            </div>
-        <% } %>
     </div>
 </section>

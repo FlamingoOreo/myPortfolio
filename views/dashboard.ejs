@@ -4,14 +4,14 @@
         <title>Portfolio</title>
         <link rel="stylesheet" href="../font/bootstrap-icons.css">
         <link rel="stylesheet" href="../css/bootstrap.min.css"/>
-        <link href="../css/contact/navbar.css" rel="stylesheet">
-        <link href="../css/contact/contact.css" rel="stylesheet">
+        <link href="../css/login/login.css" rel="stylesheet">
+        <link href="../css/login/navbar.css" rel="stylesheet">
       </head>
     <body class="position-relative" data-bs-spy="scroll">
       <%- include('./partials/navbar.ejs',{authenticated: authenticated}) %>
       <div data-spy="scroll" data-target="#navbar" data-offset="0">
-        <%- include('./partials/contact.ejs') %>
+        <%- include('./partials/dashboard.ejs',{authenticated: authenticated}) %>
       </div>
       <%- include('./partials/scripts.ejs') %>
     </body>
-</html
+</html>

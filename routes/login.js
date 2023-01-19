@@ -18,15 +18,18 @@ passport.serializeUser(function(user, cb) {
   });
   router.get('/', function(req, res, next) {
     if(!req.user) {
-      res.render('login', {user: null});
+      let authenticated =  fs.readFileSync(path.resolve(__dirname, "../data/authenticated.json"));
+      res.render('login', {user: null,authenticated: JSON.parse(authenticated) });
     }
     else {
-      res.render('login', {user: req.user});
+      let authenticated =  fs.readFileSync(path.resolve(__dirname, "../data/authenticated.json"));
+      res.render('dashboard', {user: req.user, authenticated: JSON.parse(authenticated)});
     }
   });
   router.post('/logout', function(req, res, next) {
     req.logout(function(err) {
       if (err) { return next(err); }
+      fs.writeFileSync(path.resolve(__dirname, "../data/authenticated.json"), JSON.stringify({ authenticated: false }));
       res.redirect('/login');
     });
   });
@@ -37,10 +40,12 @@ passport.use(new LocalStrategy(function verify(username, password, cb) {
     if (filteredArray.length > 0) {
       let usersData = filteredArray[0];
       if (usersData.password == password) {
+        fs.writeFileSync(path.resolve(__dirname, "../data/authenticated.json"), JSON.stringify({ authenticated: true }));
         return cb(null, usersData);
       }
     }
     else {
+      fs.writeFileSync(path.resolve(__dirname, "../data/authenticated.json"), JSON.stringify({ authenticated: false }));
       return cb(null, false);
     }
   }));
@@ -50,7 +55,12 @@ router.post('/password', passport.authenticate('local', {
     failureRedirect: '/login'
   }));
 router.get('/', function(req, res, next) {
-    res.render('login');
+    let authenticated =  fs.readFileSync(path.resolve(__dirname, "../data/authenticated.json"));
+    if(authenticated){
+      res.render('dashboard',{authenticated: JSON.parse(authenticated)});
+
+    }
+    res.render('login',{authenticated: JSON.parse(authenticated)});
   });
 
   
