@@ -12,7 +12,7 @@ var ensureLoggedIn = ensureLogIn();
 /* GET home page. */
 router.get('/', function(req, res, next) {
   let data = fs.readFileSync(path.resolve(__dirname, "../data/recommendations.json"));
-  res.render('recommendations', { data: JSON.parse(data)
+  res.render('blog', { data: JSON.parse(data)
  });
 });
 router.post('/', jsonParser, function(req, res, next) {
