@@ -50,7 +50,7 @@ passport.use(new LocalStrategy(function verify(username, password, cb) {
     }
   }));
 
-router.post('/password', passport.authenticate('local', {
+  router.post('/password', passport.authenticate('local', {
     successReturnToOrRedirect: '/',
     failureRedirect: '/login'
   }));
